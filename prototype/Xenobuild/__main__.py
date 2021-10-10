@@ -1,6 +1,7 @@
 
 import init
 import argparse
+import os
 
 
 def buildParser():
@@ -16,6 +17,9 @@ def initializeTargetScript(name, type, includePath=None):
     path = "."
     sources = init.list_files(path, init.cpp_filter)
     template = init.cmake_gen_target_script(name, type, sources, includePath)
+
+    if os.path.exists("CMakeLists.txt"):
+        raise FileExistsError("Pre-existing CMakeLists.txt found.")
 
     with open("CMakeLists.txt", "w") as fileHandle:
         fileHandle.write(template)
