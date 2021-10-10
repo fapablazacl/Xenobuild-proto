@@ -50,14 +50,13 @@ def list_files(path, filter = None):
 
 
 def cmake_gen_target_command(type):
-    if not type in ["library", "executable"]:
-        raise f"Unknown '{type}'' target"
-    
-    if type == "library":
+    if type == "lib":
         return "add_library"
     
-    if type == "executable":
+    if type == "exe":
         return "add_executable"
+
+    return None
 
 
 def cmake_gen_target_script(name, type, sources, includeDirectory=None):
