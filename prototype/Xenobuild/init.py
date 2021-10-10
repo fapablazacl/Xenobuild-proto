@@ -49,13 +49,27 @@ def list_files(path, filter = None):
     return sources
 
 
-def cmake_gen_library(target, sources, includeDirectory):
+def cmake_gen_target_command(type):
+    if not type in ["library", "executable"]:
+        raise f"Unknown '{type}'' target"
+    
+    if type == "library":
+        return "add_library"
+    
+    if type == "executable":
+        return "add_executable"
+
+
+def cmake_gen_target_script(name, type, sources, includeDirectory=None):
     template = f"""
-set (target {target})
+# Automatically generated CMakeLists.txt
+set (target {name})
 set (sources {" ".join(sources)})
 
-add_library(${{target}} ${{sources}})
-target_include_directories(${{target}} PUBLIC {includeDirectory})
+{cmake_gen_target_command(type)}(${{target}} ${{sources}})
+
 """
+    if includeDirectory is not None:
+        template += f'target_include_directories(${{target}} PUBLIC {includeDirectory})'
 
     return template
