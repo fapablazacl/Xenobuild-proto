@@ -63,7 +63,7 @@ def cmake_gen_target_script(name, type, sources, includeDirectory=None):
     template = f"""
 # Automatically generated CMakeLists.txt
 set (target {name})
-set (sources {" ".join(sources)})
+set (sources {"\n".join(sources)})
 
 {cmake_gen_target_command(type)}(${{target}} ${{sources}})
 
