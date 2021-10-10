@@ -56,12 +56,6 @@ set (sources {" ".join(sources)})
 
 add_library(${{target}} ${{sources}})
 target_include_directories(${{target}} PUBLIC {includeDirectory})
-    """
+"""
 
     return template
-
-
-if __name__=='__main__':
-    sources = list_files(".", cpp_filter)
-    template = cmake_gen_library("mylibrary", sources, "include")
-    print(template)
