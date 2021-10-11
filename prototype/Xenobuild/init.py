@@ -60,13 +60,14 @@ def cmake_gen_target_command(type):
 
 
 def cmake_gen_target_script(name, type, sources, includeDirectory=None):
-    template = f"""
-# Automatically generated CMakeLists.txt
+    sources_value = "\n".join(sources)
+
+    template = f""" # Automatically generated CMakeLists.txt
+
 set (target {name})
-set (sources {"\n".join(sources)})
+set (sources {sources_value})
 
 {cmake_gen_target_command(type)}(${{target}} ${{sources}})
-
 """
     if includeDirectory is not None:
         template += f'target_include_directories(${{target}} PUBLIC {includeDirectory})'
